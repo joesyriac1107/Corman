@@ -1,0 +1,55 @@
+Find max sum subarray
+
+WIth divide and conquer we split the Array A[low...high] into two equal halves
+A[low,mid] A[mid+1,high]
+
+Max sum subarray will either be in:
+Left Subarray,
+RighSUbarray
+Crossover between left and right subarray
+
+Finding the max subarray in left subarray or right subarray is same but smaller instance of the bigger problem
+hence we can use recurssion
+
+Finding the crossover sum subarray is different and hence we will use it in the combine method of divide and conquer
+
+	Find MaxCrossSumSubArray(A,left,mid,right)
+		leftSum = -infinity
+		sum=0
+		
+		for i mid downto left
+			sum=sum+A[i]
+			if sum > leftSum
+				leftSum = sum
+				leftLow=i
+				
+		rightSum=-infinity
+		sum=0
+		
+		for j mid+1 to high
+			sum =sum+A[j]
+			if sum>rightSum
+				rightSum = sum
+				rightHigh = j
+				
+		return(leftLow,rightHigh,leftSum+rightSum)
+		
+	
+	Find MaxSumSubArray(A,low,high)
+		if high == low
+			return(low,high,A[i])
+		else
+			mid=(high+low)/2
+			(leftLow,leftHigh,leftSum)=MaxSumSubArray(A,low,mid)
+			(rightLow,rightHigh,rightSum)=MaxSumSubArray(A,mid+1,high)
+			(crossLow,crossHigh,crossSum)=MaxCrossSumSubArray(A,low,mid,high)
+			
+			if(leftSum>rightSum && leftSum >crossSum)
+				return (leftLow,leftHigh,leftSum);
+			if(rightSum>leftSum && rightSum >crossSum)
+				return (rightLow,rightHigh,rightSum);
+			else
+				return (crossLow,crossHigh,crossSum)
+	
+	
+		
